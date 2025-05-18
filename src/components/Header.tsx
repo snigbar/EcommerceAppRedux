@@ -1,30 +1,42 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import {
   clearCart,
   decreaseQuantity,
   increaseQuantity,
   removeFromCart,
 } from "../store/cartSlice";
+import type { CartItem, RootState } from "../interfaces/Cart";
 
 function Header() {
   const cartItems = useSelector((state: RootState) => state.cart.items);
+
+  const totalPrice: number = cartItems.reduce(
+    (sum: number, item: CartItem) => sum + item.quantity * Number(item.price),
+    0
+  );
+
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
 
-  interface CartItem {
-    id: number;
-    title: string;
-    quantity: number;
-  }
-
-  interface RootState {
-    cart: {
-      items: CartItem[];
+  useEffect(() => {
+    if (!isOpen) return;
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     };
-  }
+  }, [isOpen]);
 
   const totalItems: number = cartItems.reduce(
     (sum: number, item: CartItem) => sum + item.quantity,
@@ -51,7 +63,10 @@ function Header() {
         </button>
 
         {isOpen && (
-          <div className="absolute right-0 mt-2 w-80 bg-white text-black shadow-lg rounded p-4 z-10">
+          <div
+            ref={modalRef}
+            className="absolute right-0 mt-2 w-80 bg-white text-black shadow-lg rounded p-4 z-10"
+          >
             <h2 className="text-lg font-bold mb-2">Cart Items</h2>
             {cartItems.length === 0 ? (
               <p className="text-sm">Cart is empty.</p>
@@ -83,9 +98,24 @@ function Header() {
                     </div>
                   </div>
                 ))}
+                {/* Total Price */}
+                <div className="mt-3 font-semibold text-right">
+                  Total: ${totalPrice.toFixed(2)}
+                </div>
+
+                {/* View Cart Link */}
+                <Link
+                  to="/cart"
+                  className="mt-2 block text-center bg-blue-600 text-white py-1 rounded hover:bg-blue-700"
+                  onClick={() => setIsOpen(false)}
+                >
+                  View Full Cart
+                </Link>
+
+                {/* Clear Cart */}
                 <button
                   onClick={() => dispatch(clearCart())}
-                  className="mt-3 w-full bg-red-600 text-white py-1 rounded hover:bg-red-700"
+                  className="mt-2 w-full bg-red-600 text-white py-1 rounded hover:bg-red-700"
                 >
                   Clear Cart
                 </button>
