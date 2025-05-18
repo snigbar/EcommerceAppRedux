@@ -19,10 +19,10 @@ function ProductList() {
 
   return (
     <div>
-      <h1>Product List</h1>
+      <h1 className="my-4 text-center">Product List</h1>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <ul className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-content-center items-center mx-auto">
         {products.map((product: Product) => (
           <ProductCard
             key={product.id}

@@ -1,23 +1,34 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/store";
+import CartItem from "../components/CartItem";
+import { clearCart } from "../store/cartSlice";
 
 function Cart() {
   const cartItems = useSelector((state: RootState) => state.cart.items);
 
+  const dispatch = useDispatch();
   return (
-    <div>
-      <h1>Cart</h1>
+    <div className="max-w-4xl mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Cart</h1>
       {cartItems.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
-        <ul>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {cartItems.map((item) => (
-            <li key={item.id}>
-              {item.title} x {item.quantity}
-            </li>
+            <CartItem key={item.id} item={item} />
           ))}
-        </ul>
+        </div>
       )}
+      <div className="w-full flex justify-center">
+        {cartItems.length > 0 && (
+          <button
+            onClick={() => dispatch(clearCart())}
+            className="mt-8 bg-red-700 text-white px-3 py-1 rounded hover:bg-red-800 mx-auto "
+          >
+            Clear Cart
+          </button>
+        )}
+      </div>
     </div>
   );
 }
