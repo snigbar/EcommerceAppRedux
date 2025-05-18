@@ -1,14 +1,21 @@
-import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import Cart from "./pages/Cart";
+import ProductLIst from "./pages/ProductLIst";
+import Header from "./components/Header";
 
 function App() {
   return (
-    <div className="text-emerald-500 bg-slate-900 min-h-screen flex flex-col">
-      <div className="flex-1 flex flex-col">
-        <header className="bg-slate-800 p-4">
-          <h1 className="text-2xl font-bold">My E-commerce App</h1>
-        </header>
+    <Router>
+      <Header />
+      <div className="container mx-auto p-4">
+        <h1 className="text-2xl font-bold mb-4">E-commerce App</h1>
+        <Routes>
+          <Route path="/" element={<ProductLIst />} />
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 }
 
