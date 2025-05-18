@@ -1,8 +1,11 @@
+import { useState } from "react";
+
 type ProductCardProps = {
   image: string;
   title: string;
   price: number | string;
-  onAddToCart?: () => void;
+  onAddToCart: () => void;
+  removeFromCart: () => void;
 };
 
 const ProductCard = ({
@@ -10,7 +13,19 @@ const ProductCard = ({
   title,
   price,
   onAddToCart,
+  removeFromCart,
 }: ProductCardProps) => {
+  const [added, setAdded] = useState(false);
+
+  const handleAddToCart = () => {
+    onAddToCart();
+    setAdded(true);
+  };
+
+  const handleRemoveFromCart = () => {
+    setAdded(false);
+    removeFromCart();
+  };
   return (
     <div className="max-w-sm rounded-2xl overflow-hidden shadow-lg bg-white p-4">
       <img className="w-full h-64 object-contain" src={image} alt={title} />
@@ -19,12 +34,21 @@ const ProductCard = ({
         <p className="text-gray-700 text-base font-semibold">${price}</p>
       </div>
       <div className="px-2 pb-4">
-        <button
-          className="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition duration-200 w-full"
-          onClick={onAddToCart}
-        >
-          Add to Cart
-        </button>
+        {added ? (
+          <button
+            className="bg-rose-600 text-white px-4 py-2 rounded-xl hover:bg-rose-700 transition duration-200 w-full"
+            onClick={handleRemoveFromCart}
+          >
+            Remove from Cart
+          </button>
+        ) : (
+          <button
+            className="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition duration-200 w-full"
+            onClick={handleAddToCart}
+          >
+            Add to Cart
+          </button>
+        )}
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import type { RootState } from "../store/store";
 import { fetchProducts } from "../store/productSlice";
 import type { Product } from "../interfaces/Product";
 import ProductCard from "../components/ProductCard";
+import { addToCart, removeFromCart } from "../store/cartSlice";
 
 function ProductList() {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,6 +29,12 @@ function ProductList() {
             price={product.price}
             image={product.image}
             title={product.title}
+            onAddToCart={() => {
+              dispatch(addToCart({ ...product }));
+            }}
+            removeFromCart={() => {
+              dispatch(removeFromCart(product.id));
+            }}
           />
         ))}
       </ul>

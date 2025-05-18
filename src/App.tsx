@@ -9,7 +9,7 @@ function App() {
     <Router>
       <Header />
       <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">E-commerce App</h1>
+        <h1 className="text-2xl font-bold mb-4 text-center">E-commerce App</h1>
         <Routes>
           <Route path="/" element={<ProductLIst />} />
           <Route path="/cart" element={<Cart />} />
