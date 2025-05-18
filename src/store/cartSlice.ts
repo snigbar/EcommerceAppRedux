@@ -10,6 +10,7 @@ interface CartState {
   items: CartItem[];
 }
 
+// Load cart items from localStorage
 function loadCartFromLocalStorage(): CartItem[] {
   try {
     const data = localStorage.getItem("cartItems");
@@ -19,7 +20,7 @@ function loadCartFromLocalStorage(): CartItem[] {
     return [];
   }
 }
-
+// Save cart items to localStorage
 function saveCartToLocalStorage(items: CartItem[]) {
   try {
     localStorage.setItem("cartItems", JSON.stringify(items));
@@ -28,10 +29,12 @@ function saveCartToLocalStorage(items: CartItem[]) {
   }
 }
 
+// Initial state
 const initialState: CartState = {
   items: loadCartFromLocalStorage(),
 };
 
+// Cart slice
 const cartSlice = createSlice({
   name: "cart",
   initialState,

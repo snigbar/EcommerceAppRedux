@@ -19,7 +19,7 @@ export const fetchProducts = createAsyncThunk<Product[]>(
       const data: Product[] = await response.json();
       return data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error: Error | any) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }

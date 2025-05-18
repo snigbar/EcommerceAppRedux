@@ -20,11 +20,11 @@ function ProductList() {
   }, [dispatch]);
 
   return (
-    <div>
-      <h1 className="my-4 text-center">Product List</h1>
+    <div className="min-h-screen flex flex-col justify-center items-center">
+      <h1 className="my-4 text-center text-lg font-bold">Product List</h1>
       {loading && <Loader />}
       {error && <ErrorPage />}
-      <ul className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-content-center items-center mx-auto">
+      <ul className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center items-center mx-auto">
         {products.map((product: Product) => (
           <ProductCard
             key={product.id}
