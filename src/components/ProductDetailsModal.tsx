@@ -23,7 +23,7 @@ const ProductDetailsModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded-xl shadow-2xl w-96 max-w-full relative">
+      <div className="bg-white p-6 rounded-xl shadow-2xl w-11/12 sm:w-4/5 md:w-[40%] max-w-full relative">
         <button
           onClick={onClose}
           className="absolute top-2 right-3 text-gray-600 hover:text-black text-xl"

@@ -6,6 +6,8 @@ import { fetchProducts } from "../store/productSlice";
 import type { Product } from "../interfaces/Product";
 import ProductCard from "../components/ProductCard";
 import { addToCart, removeFromCart } from "../store/cartSlice";
+import Loader from "../components/Loader";
+import ErrorPage from "../components/ErrorPage";
 
 function ProductList() {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,8 +22,8 @@ function ProductList() {
   return (
     <div>
       <h1 className="my-4 text-center">Product List</h1>
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
+      {loading && <Loader />}
+      {error && <ErrorPage />}
       <ul className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-content-center items-center mx-auto">
         {products.map((product: Product) => (
           <ProductCard
